@@ -2,16 +2,17 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Modal, View, Text, StyleSheet} from 'react-native';
 import * as Location from 'expo-location';
 import { StatusBar } from 'expo-status-bar';
-import {Loading} from "./Loading";
+import {Loading} from "./components/Loading/Loading";
 import {getWeather} from "./api/api";
+import {Weather} from "./components/Weather/Weather";
 
 const App = () => {
 
   const [isLatitude, setIsLatitude] = useState(null);
   const [isLongitude, setIsLongitude] = useState(null);
   const [isLoading, setIsLoading] = useState(true)
-
-  // if (isLatitude && isLongitude) console.log(`Широта:${isLatitude} Долгота:${isLongitude}`);
+  const [isTemp, setIsTemp] = useState(null);
+  const [isData, setIsData] = useState({});
 
   const getLocation = async () =>  {
     try {
@@ -53,17 +54,20 @@ const App = () => {
         setIsLatitude(latitude);
         setIsLongitude(longitude)
         getWeather(latitude, longitude)
-          .then(data => console.log(data))
+          .then(data => setIsData(data))
           .catch(error => console.log(error))
       })
       .catch(error => {
         console.log(error)
         setIsLoading(true)
       })
+    return () => {
+
+    }
   }, []);
 
   return (
-    isLoading ? <Loading/> : <Info/>
+    isLoading ? <Loading/> : <Weather data={isData}/>
   );
 };
 

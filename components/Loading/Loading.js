@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 
 const styles = StyleSheet.create({
   loading: {
@@ -17,6 +17,8 @@ const styles = StyleSheet.create({
 export const Loading = () => {
   return(
     <View style={styles.loading}>
+        <StatusBar barStyle="dark-content"></StatusBar>
+
       <Text style={styles.text}>Loading weather...</Text>
     </View>
   )
